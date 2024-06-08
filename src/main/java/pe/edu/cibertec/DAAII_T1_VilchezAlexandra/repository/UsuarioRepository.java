@@ -10,19 +10,11 @@ import pe.edu.cibertec.DAAII_T1_VilchezAlexandra.model.bd.Usuario;
 
 @Repository
 public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
-    //Select * from usuario where nomusuario = ''
+
     Usuario findByNomusuario(String nomusuario);
 
-    //Llamar a stored procedure
-    //@Query(value = "{call spActualizarUsuario(:nombres,:apellidos,:activo,:idusuario)}",
-    // nativeQuery = true)
     @Transactional
     @Modifying
-    @Query(value = "UPDATE usuario SET nombres=:nombres, apellidos=:apellidos, " +
-            "activo=:activo where idusuario=:idusuario",
-            nativeQuery = true)
-    void actualizarUsuario(@Param("nombres") String nombres,
-                           @Param("apellidos") String apellidos,
-                           @Param("activo") Boolean activo,
-                           @Param("idusuario") Integer idusuario);
+    @Query(value = "UPDATE usuario SET password=:password WHERE idusuario=:idusuario", nativeQuery = true)
+    void actualizarPassword(@Param("password") String password);
 }

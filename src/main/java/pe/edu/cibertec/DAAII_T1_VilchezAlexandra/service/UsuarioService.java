@@ -5,9 +5,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import pe.edu.cibertec.DAAII_T1_VilchezAlexandra.model.bd.Rol;
 import pe.edu.cibertec.DAAII_T1_VilchezAlexandra.model.bd.Usuario;
+import pe.edu.cibertec.DAAII_T1_VilchezAlexandra.model.dto.ResultadoDto;
+import pe.edu.cibertec.DAAII_T1_VilchezAlexandra.model.dto.UsuarioDto;
 import pe.edu.cibertec.DAAII_T1_VilchezAlexandra.repository.RolRepository;
 import pe.edu.cibertec.DAAII_T1_VilchezAlexandra.repository.UsuarioRepository;
-import pe.edu.cibertec.DAAII_T1_VilchezAlexandra.util.RandomPassword;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -19,7 +20,6 @@ public class UsuarioService implements IUsuarioService {
 
     private UsuarioRepository usuarioRepository;
     private RolRepository rolRepository;
-    private RandomPassword randomPassword;
 
     @Override
     public Usuario buscarUsuarioXNomUsuario(String nomusuario) {
@@ -27,21 +27,19 @@ public class UsuarioService implements IUsuarioService {
     }
     @Override
     public Usuario guardarUsuario(Usuario usuario) {
-        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         usuario.setActivo(true);
         Rol usuarioRol = rolRepository.findByNomrol("ADMIN");
         usuario.setRoles(new HashSet<>(Arrays.asList(usuarioRol)));
-        usuario.setPassword(passwordEncoder.encode(randomPassword.generar(7)));
         return usuarioRepository.save(usuario);
     }
 
     @Override
-    public void actualizarUsuario(Usuario usuario) {
-        usuarioRepository.actualizarUsuario(
-                usuario.getNombres(),usuario.getApellidos(),
-                usuario.getActivo(),usuario.getIdusuario()
+    public void actualizarPassword(Usuario usuario) {
+        usuarioRepository.actualizarPassword(
+                usuario.getPassword()
         );
     }
+
     @Override
     public List<Usuario> listarUsuario() {
         return usuarioRepository.findAll();

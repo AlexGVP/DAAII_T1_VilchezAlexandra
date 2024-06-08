@@ -2,6 +2,7 @@ package pe.edu.cibertec.DAAII_T1_VilchezAlexandra.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -17,6 +18,8 @@ public class LoginController {
     }
     @GetMapping("/dashboard")
     public String dashboard(){ return "auth/home"; }
-    @GetMapping("/frmregistrarse")
-    public String frmregistrarse() { return "auth/frmregistrarse"; }
+    @GetMapping("/registrarse")
+    public String registrarse() { return "auth/frmregistrarse"; }
+    @GetMapping("/frmpassword")
+    public String frmpassword(){ return "auth/frmpassword"; }
 }

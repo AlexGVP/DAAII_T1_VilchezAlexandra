@@ -19,6 +19,7 @@ import java.util.Set;
 @Service
 public class DetalleUsuarioService implements UserDetailsService {
     private UsuarioService usuarioService;
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Usuario usuario = usuarioService.buscarUsuarioXNomUsuario(username);
@@ -30,9 +31,6 @@ public class DetalleUsuarioService implements UserDetailsService {
         for(Rol rol : listaRoles){
             roles.add(new SimpleGrantedAuthority(rol.getNomrol()));
         }
-        /*listaRoles.forEach(rol -> {
-            roles.add(new SimpleGrantedAuthority(rol.getNomrol()));
-        });*/
         return roles;
     }
     private UserDetails obtenerUsuarioAutenticado(Usuario usuario,

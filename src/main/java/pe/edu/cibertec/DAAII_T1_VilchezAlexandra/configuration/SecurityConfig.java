@@ -23,8 +23,10 @@ public class SecurityConfig {
         httpSecurity.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(
                         auth ->
-                                auth.requestMatchers("/auth/login",
-                                                "/auth/frmregistrarse",
+                                auth.requestMatchers(
+                                                "/auth/login",
+                                                "/auth/registrarse",
+                                                "/auth/frmpassword",
                                                 "/resources/**",
                                                 "/static/**",
                                                 "/css/**",

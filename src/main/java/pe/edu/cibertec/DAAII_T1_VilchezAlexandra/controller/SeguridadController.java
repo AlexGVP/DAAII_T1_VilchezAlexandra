@@ -16,12 +16,7 @@ import java.util.List;
 @RequestMapping("/seguridad")
 public class SeguridadController {
     private UsuarioService usuarioService;
-    @GetMapping("/usuario")
-    public String frmMantUsuario(Model model){
-        model.addAttribute("listaUsuarios",
-                usuarioService.listarUsuario());
-        return "seguridad/formusuario";
-    }
+
     @PostMapping("/usuario")
     @ResponseBody
     public ResultadoDto registrarUsuario(@RequestBody UsuarioDto usuarioDto){
@@ -34,7 +29,6 @@ public class SeguridadController {
             if(usuarioDto.getIdusuario() > 0){
                 usuario.setIdusuario(usuarioDto.getIdusuario());
                 usuario.setActivo(usuarioDto.getActivo());
-                usuarioService.actualizarUsuario(usuario);
             }else{
                 usuario.setNomusuario(usuarioDto.getNomusuario());
                 usuario.setEmail(usuarioDto.getEmail());
