@@ -17,28 +17,10 @@ import java.util.List;
 public class SeguridadController {
     private UsuarioService usuarioService;
 
-    @PostMapping("/usuario")
-    @ResponseBody
-    public ResultadoDto registrarUsuario(@RequestBody UsuarioDto usuarioDto){
-        String mensaje = "Usuario registrado correctamente";
-        boolean respuesta = true;
-        try {
-            Usuario usuario = new Usuario();
-            usuario.setNombres(usuarioDto.getNombres());
-            usuario.setApellidos(usuarioDto.getApellidos());
-            if(usuarioDto.getIdusuario() > 0){
-                usuario.setIdusuario(usuarioDto.getIdusuario());
-                usuario.setActivo(usuarioDto.getActivo());
-            }else{
-                usuario.setNomusuario(usuarioDto.getNomusuario());
-                usuario.setEmail(usuarioDto.getEmail());
-                usuarioService.guardarUsuario(usuario);
-            }
-        }catch (Exception ex){
-            mensaje = "Usuario no registrado, error en la BD";
-            respuesta = false;
-        }
-        return ResultadoDto.builder().mensaje(mensaje).respuesta(respuesta).build();
+    @PostMapping("/guardarusuario")
+    public String guardarUsuario(@ModelAttribute Usuario usuario){
+        usuarioService.guardarUsuario(usuario);
+        return "auth/login";
     }
 
     @GetMapping("/usuario/{id}")
